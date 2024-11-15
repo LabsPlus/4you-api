@@ -1,17 +1,17 @@
 import express from 'express';
 
-export class App{
-    private app: express.Application;
-    private port: number;
+class App{
 
-    constructor(port: number){
+ constructor(port) {
         this.app = express();
         this.port = port;
     }
 
-    public listen(){
+ listen(){
         this.app.listen(this.port, () => {
             console.log(`Server started at http://localhost:${this.port}`);
         });
     }
 }
+
+export default App;

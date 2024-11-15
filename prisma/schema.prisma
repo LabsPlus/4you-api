@@ -1,0 +1,35 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.Char(50)
+  email      String   @db.Char(50)
+  whatsapp   String   @db.Char(50)
+  taxid      String   @db.Char(50)
+  birth_date DateTime
+  status     String   @db.Char(2)
+
+  friends    Friend[] 
+}
+
+model Friend {
+  id         Int      @id @default(autoincrement())
+  customer_id Int
+  birth_date DateTime
+  name       String   @db.Char(50)
+  whatsapp   String   @db.Char(50)
+  email      String   @db.Char(50)
+
+  customer   Customer @relation(fields: [customer_id], references: [id])
+}
+
+
+
