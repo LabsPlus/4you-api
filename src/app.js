@@ -1,6 +1,6 @@
 import express from 'express';
 
-class App{
+class App {
 
  constructor(port) {
         this.app = express();
