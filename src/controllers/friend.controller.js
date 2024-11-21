@@ -1,5 +1,5 @@
 import express from 'express';
-import FriendService from '../services/friend.service.js/index.js';
+import FriendService from '../services/friend.service.js';
 
 class FriendController {
     constructor() {
