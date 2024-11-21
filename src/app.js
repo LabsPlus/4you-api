@@ -13,6 +13,7 @@ class App {
 
         this.app.use(express.json());
         this.app.use('/api/customers', customerRoutes);
+        this.app.use('/api/friends', friendRoutes);
 
         this.app.listen(this.port, () => {
             console.log(`Server started at http://localhost:${this.port}`);
