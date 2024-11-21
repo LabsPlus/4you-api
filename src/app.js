@@ -1,5 +1,7 @@
 import express from 'express';
 import customerRoutes from './routes/customer.routes.js';
+import friendRoutes from './routes/friend.routes.js';
+
 class App {
 
  constructor(port) {

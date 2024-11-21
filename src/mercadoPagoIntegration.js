@@ -10,13 +10,23 @@ const payment = new Payment(client);
 // Step 4: Create the request object 
 const body = {
 	"items": [
-		{"id":"1", "title": "Plano Basico", "quantity": 1, "unit_price": 5.02,},
-		{"id":"2", "title": "Plano Premium", "quantity": 1, "unit_price": 8.49,}
+		{
+			"id": '1',
+			"title": 'Plano Basico',
+			"quantity": 1,
+			"unit_price": 5.02,
+		},
+		{
+			"id": "2",
+			"title": "Plano Premium",
+			"quantity": 1,
+			"unit_price": 8.49,
+		}
 	],
 	"back_urls": {
-    "success": "https://test.com/success",
-    "pending": "https://test.com/pending",
-    "failure": "https://test.com/failure"
+		"success": "https://test.com/success",
+		"pending": "https://test.com/pending",
+		"failure": "https://test.com/failure"
 	}
 };
 
