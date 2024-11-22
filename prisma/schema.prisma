@@ -18,6 +18,7 @@ model Customer {
   status     String   @db.Char(2)
 
   friends    Friend[] 
+  payment    Payment[]
 }
 
 model Friend {
@@ -27,6 +28,20 @@ model Friend {
   name       String   @db.Char(50)
   whatsapp   String   @db.Char(50)
   email      String   @db.Char(50)
+
+  customer   Customer @relation(fields: [customer_id], references: [id])
+}
+
+model Payment {
+  customer_id Int 
+  payment_date DateTime
+  payment_method String @db.Char(50)
+  payment_status String @db.Char(50)
+  payer_email String @unique @db.Char(50)
+  payer_phone String @db.Char(50)
+  payer_taxid String @db.Char(50)
+  payer_description String @db.Char(50)
+  payer String @db.Char(50)
 
   customer   Customer @relation(fields: [customer_id], references: [id])
 }
