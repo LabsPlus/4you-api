@@ -9,5 +9,6 @@ friendRoutes.get('/:email', friendController.getFriendInfo.bind(friendController
 friendRoutes.post('/create', friendController.createFriend.bind(friendController));
 friendRoutes.put('/update', friendController.updateFriend.bind(friendController));
 friendRoutes.delete('/:email', friendController.deleteFriend.bind(friendController));
+friendRoutes.get('/getFriendListByCustomerEmail/:email', friendController.getFriendListByCustomerEmail.bind(friendController));
 
 export default friendRoutes;

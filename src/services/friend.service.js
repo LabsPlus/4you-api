@@ -38,6 +38,19 @@ class FriendService {
     async deleteFriend(friendEmail) {
         return await this.friendRepository.deleteFriend(friendEmail);
     }
+
+    async getFriendListByCustomerEmail(customerEmail) {
+        if(!customerEmail){
+            throw new Error('Email is required');
+        }
+        
+        try {
+            return await this.friendRepository.getFriendListByCustomerEmail(customerEmail);
+        }
+        catch (error){
+            throw new Error('Error geting the list ');
+        }
+    }
 }
 
 export default FriendService;

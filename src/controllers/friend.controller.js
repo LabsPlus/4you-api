@@ -45,6 +45,17 @@ class FriendController {
             res.status(500).json({ error: error.message });
         }
     }
+
+    async getFriendListByCustomerEmail(req, res){
+
+        try {
+            const customerEmail = req.params.email;
+            await this.friendService.getFriendListByCustomerEmail(customerEmail);
+            res.status(204).send();
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 }
 
 export default FriendController;
