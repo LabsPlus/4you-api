@@ -49,9 +49,9 @@ class FriendController {
     async getFriendListByCustomerEmail(req, res){
 
         try {
-            const customerEmail = req.params.email;
-            await this.friendService.getFriendListByCustomerEmail(customerEmail);
-            res.status(204).send();
+            let customerEmail = req.params.email;
+
+            res.status(200).json(await this.friendService.getFriendListByCustomerEmail(customerEmail));
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
