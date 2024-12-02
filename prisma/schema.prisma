@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,28 +7,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Customer {
-  id         Int      @id @default(autoincrement())
-  name       String   @db.Char(50)
-  email      String   @unique @db.Char(50)
-  whatsapp   String   @db.Char(50)
-  taxid      String   @db.Char(50)
-  birth_date DateTime
-  status     String   @db.Char(2)
+enum StatusCustomer {
+  ACTIVE
+  INACTIVE
+}
 
-  friends    Friend[] 
+enum PaymentStatus {
+  COMPLETED
+  PENDING
+  FAILED
+}
+
+model Customer {
+  id           Int            @id @default(autoincrement())
+  name         String         @db.Char(50)
+  email        String         @unique @db.Char(50)
+  phone        String         @default("") @db.Char(50) 
+  taxid        String         @db.Char(50)
+  birth_date   DateTime
+  status       StatusCustomer @default(ACTIVE) 
+  friends      Friend[] 
+  payment      Payment[]
 }
 
 model Friend {
-  id         Int      @id @default(autoincrement())
-  customer_id Int
-  birth_date DateTime
-  name       String   @db.Char(50)
-  whatsapp   String   @db.Char(50)
-  email      String   @db.Char(50)
+  id              Int      @id @default(autoincrement())
+  customer_id     Int
+  birth_date      DateTime
+  name            String   @db.Char(50)
+  phone           String   @default("") @db.Char(50) 
+  email           String   @db.Char(50)
 
-  customer   Customer @relation(fields: [customer_id], references: [id])
+  customer        Customer @relation(fields: [customer_id], references: [id])
 }
 
+model Payment {
+  id                Int            @id @default(autoincrement())
+  customer_id       Int
+  payment_date      DateTime
+  payment_method    String         @db.Char(50)
+  payment_status    PaymentStatus  @default(PENDING) 
+  payer_email       String         @db.Char(50)
+  payer_phone       String         @default("") @db.Char(50)
+  payer_taxid       String         @db.Char(50)
+  payer_description String         @db.Char(50)
+  payer             String         @db.Char(50)
 
-
+  customer          Customer @relation(fields: [customer_id], references: [id])
+}
