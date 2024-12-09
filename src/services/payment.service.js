@@ -33,7 +33,7 @@ class PaymentService {
             throw new Error('Payment ID and ata are required');
         }
         try {
-            return await this.paymentRepository.updatePayment(paymentId, paymentData) //Passando id e dados 
+            return await this.paymentRepository.updatePayment(paymentId, paymentData) 
         } catch (error) {
             throw new Error('Error updating payment:' + error.message);
         }
