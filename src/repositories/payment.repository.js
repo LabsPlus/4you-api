@@ -44,7 +44,7 @@ class PaymentRepository {
         try {
             return await this.prisma.payment.update({
                 where: {
-                    id: paymentId  // Alterado para ID
+                    id: paymentId 
                 },
                 data: paymentData
             });

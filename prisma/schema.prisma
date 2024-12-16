@@ -24,8 +24,8 @@ model Customer {
   email        String         @unique @db.Char(50)
   phone        String         @default("") @db.Char(50) 
   taxid        String         @db.Char(50)
-  birth_date   DateTime
-  password     String          @db.Char(50)
+  birth_date   DateTime       @db.Date
+  password     String
   status       StatusCustomer @default(ACTIVE) 
   friends      Friend[] 
   payment      Payment[]
@@ -34,11 +34,11 @@ model Customer {
 model Friend {
   id              Int      @id @default(autoincrement())
   customer_id     Int
-  birth_date      DateTime
+  birth_date      DateTime @db.Date
   name            String   @db.Char(50)
   phone           String   @default("") @db.Char(50) 
   email           String   @db.Char(50)
-  password     String      @db.Char(50)
+  password        String
 
   customer        Customer @relation(fields: [customer_id], references: [id])
 }
@@ -46,11 +46,11 @@ model Friend {
 model Payment {
   id                Int            @id @default(autoincrement())
   customer_id       Int
-  payment_date      DateTime
+  payment_date      DateTime       @db.Date
   payment_method    String         @db.Char(50)
   payment_status    PaymentStatus  @default(PENDING) 
   payer_email       String         @db.Char(50)
-  payer_password     String          @db.Char(50)
+  payer_password    String
   payer_phone       String         @default("") @db.Char(50)
   payer_taxid       String         @db.Char(50)
   payer_description String         @db.Char(50)

@@ -29,11 +29,16 @@ class CustomerRepository {
 
     async createCustomer(customer) {
         try {
+        
             return await this.prisma.customer.create({
+
                 data: customer
             });
+
         } catch (error) {
+            console.log('error', error);
             throw new Error('Error creating customer: ' + error.message);
+
         }
     }
     async updateCustomer(customerEmail, customerData) {
