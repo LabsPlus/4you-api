@@ -5,9 +5,13 @@ class FriendService {
         this.friendRepository = new FriendRepository();
     }
 
-    async getFriendInfo(friendEmail) {
-        return await this.friendRepository.getFriendInfo(friendEmail);
+    async getFriendInfo(friendId) {
+        try {
+        return await this.friendRepository.getFriendInfo(friendId);
+    } catch (error) {
+        throw new Error('Error fetching friend info:' +error.message);
     }
+}
 
     async createFriend(friend) {
         if (!friend) {
@@ -20,35 +24,40 @@ class FriendService {
         }
     }
 
-    async updateFriend(friend) {
+    async updateFriend(friendId, friendData) {
 
-        if (!friend) {
+        if (!friendId) {
             throw new Error('Friend is required');
         }
-        if (!friend.email) {
-            throw new Error('Email is required');
+        if (!friendData) {
+            throw new Error('Data is required');
         }
         try {
-            return await this.friendRepository.updateFriend(friend);
+            return await this.friendRepository.updateFriend(friendId, friendData);
         } catch (error) {
             throw new Error('Error updating friend: ' + error.message);
         }
     }
 
-    async deleteFriend(friendEmail) {
-        return await this.friendRepository.deleteFriend(friendEmail);
+    async deleteFriend(friendId) {
+        try {
+            return await this.friendRepository.deleteFriend(friendId);
+        } catch (error) {
+            throw new Error('Error deleting friend ' + error.message);
+        }
     }
 
-    async getFriendListByCustomerEmail(customerEmail) {
-        if(!customerEmail){
-            throw new Error('Email is required');
+    async getFriendListByCustomerId(customerId) {
+        if (!customerId) {
+            throw new Error('Customer ID is required');
         }
-        
+
         try {
-            return await this.friendRepository.getFriendListByCustomerEmail(customerEmail);
+            return await this.friendRepository.getFriendListByCustomerId(customerId);
         }
-        catch (error){
-            throw new Error('Error geting the list ');
+        catch (error) {
+            throw new Error(`Error fetching friend list: ${error.message}`);
+
         }
     }
 }

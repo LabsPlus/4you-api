@@ -4,50 +4,67 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 class CustomerRepository {
-
     constructor() {
-
         this.databaseUrl = process.env.DATABASE_URL;
-        this.prisma = new PrismaClient(
-            {
-                datasources: {
-                    db: {
-                        url: this.databaseUrl,
-                    }
+        this.prisma = new PrismaClient({
+            datasources: {
+                db: {
+                    url: this.databaseUrl,
                 }
             }
-        );
+        });
     }
 
     async getCustomerInfo(customerEmail) {
-        return await this.prisma.customer.findUnique({
-            where: {
-                email: customerEmail
-            }
-        });
+        try {
+            return await this.prisma.customer.findUnique({
+                where: {
+                    email: customerEmail
+                }
+            });
+        } catch (error) {
+            throw new Error('Error getting customer info: ' + error.message);
+        }
     }
 
     async createCustomer(customer) {
-        return await this.prisma.customer.create({
-            data: customer
-        });
-    }
+        try {
+        
+            return await this.prisma.customer.create({
 
-    async updateCustomer(customer) {
-        return await this.prisma.customer.update({
-            where: {
-                email: customer.email
-            },
-            data: customer
-        });
+                data: customer
+            });
+
+        } catch (error) {
+            console.log('error', error);
+            throw new Error('Error creating customer: ' + error.message);
+
+        }
     }
+    async updateCustomer(customerEmail, customerData) {
+        try {
+            return await this.prisma.customer.update({
+                where: {
+                    email: customerEmail,
+                },
+                data: customerData,
+            });
+        } catch (error) {
+            throw new Error('Error updating customer: ' + error.message);
+        }
+    }
+    
 
     async deleteCustomer(customerEmail) {
-        return await this.prisma.customer.delete({
-            where: {
-                email: customerEmail
-            }
-        });
+        try {
+            return await this.prisma.customer.delete({
+                where: {
+                    email: customerEmail
+                }
+            });
+        } catch (error) {
+            throw new Error('Error deleting customer: ' + error.message);
+        }
     }
 }
 

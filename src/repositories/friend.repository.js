@@ -4,9 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 class FriendRepository {
-
     constructor() {
-
         this.databaseUrl = process.env.DATABASE_URL;
 
         this.prisma = new PrismaClient({
@@ -18,47 +16,63 @@ class FriendRepository {
         });
     }
 
-    async getFriendInfo(friendEmail) {
-
-        return await this.prisma.friend.findUnique({
-            where: {
-                email: friendEmail,
-            },
-        });
-    }
-    async createFriend(friend) { 
-
-        return await this.prisma.friend.creat({
-            data: friend,
-        });
-    }
-    async updateFriend(friend) {
-
-        return await this.prisma.friend.update({
-            where: {
-                email: friend.email,
-            },
-        });
+    async getFriendInfo(friendId) {
+        try {
+            return await this.prisma.friend.findUnique({
+                where: {
+                    id: friendId,
+                },
+            });
+        } catch (error) {
+            throw new Error("Error getting friend info: " + error.message);
+        }
     }
 
-    async deleteFriend(friendEmail) {
-        
-        return await this.prisma.friend.delete({
-            where: {
-                email: friendEmail
-            }
-        });
+    async createFriend(friend) {
+        try {
+            return await this.prisma.friend.create({
+                data: friend,
+            });
+        } catch (error) {
+            throw new Error("Error creating friend: " + error.message);
+        }
     }
 
-    async getFriendListByCustomerEmail(customerEmail) {
+    async updateFriend(friendId, friendData) {
+        try {
+            return await this.prisma.friend.update({
+                where: {
+                    id: friendId, 
+                },
+                data: friendData, 
+            });
+        } catch (error) {
+            throw new Error("Error updating friend: " + error.message);
+        }
+    }
 
-        return await this.prisma.friend.findMany({
-            where: {
-                customer: {
-                    email: customerEmail
-                }
-            }
-        });
+    async deleteFriend(friendId) {
+        try {
+            return await this.prisma.friend.delete({
+                where: {
+                    id: friendId,
+                },
+            });
+        } catch (error) {
+            throw new Error("Error deleting friend: " + error.message);
+        }
+    }
+
+    async getFriendListByCustomerId(customerId) {
+        try {
+            return await this.prisma.friend.findMany({
+                where: {
+                    customer_id: customerId,
+                },
+            });
+        } catch (error) {
+            throw new Error("Error getting friend list by customer ID: " + error.message);
+        }
     }
 }
 

@@ -16,11 +16,11 @@ class PaymentRepository {
         });
     }
 
-    async getPaymentInfo(paymentId) { // alterado para id
+    async getPaymentInfo(paymentId) { 
         try {
             return await this.prisma.payment.findUnique({
                 where: {
-                    id: paymentId  // Alterado para ID
+                    id: paymentId  
                 }
             });
 
@@ -44,7 +44,7 @@ class PaymentRepository {
         try {
             return await this.prisma.payment.update({
                 where: {
-                    id: paymentId  // Alterado para ID
+                    id: paymentId 
                 },
                 data: paymentData
             });
